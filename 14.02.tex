@@ -1,0 +1,316 @@
+\section{Продолжение истории с матрицами}
+Наша текущая мотивация: компактно и точно описывать системы линейных уравнений(далее СЛУ) на языке матриц.
+
+Для этого заметим, что в СЛУ каждая строчка имеет следующий вид: $a_1x_1 +\dots+ a_nx_n$.
+Поэтому давайте заведём следующую операцию умножения для матриц $M_{1\times n}(R) \times M_{n\times 1}(R)\rightarrow R$(в данном контексте и далее $R$~---~произвольное кольцо),
+а именно: 
+$$
+\begin{pmatrix}
+    a_1&\dots&a_n
+\end{pmatrix} \times
+\begin{pmatrix}
+    x_1\\\vdots\\x_n
+\end{pmatrix}=
+a_1x_1 +\dots+ a_nx_n$$
+
+\begin{defn}
+    Вектором размера $n$ будем называть матрицу $M_{n\times 1}$.
+\end{defn}
+
+Теперь логично захотеть определить умножение матрицы на вектор $M_{m\times n}\times M_{n\times 1}\Rightarrow M_{m\times 1}$ таким образом, чтобы удобно было получать нечто похожее на СЛУ.
+Очевидно это можно сделать умножением каждой строчки на вектор следующим образом:
+$$
+\begin{pmatrix}
+a_{1,1}&\dots&a_{1,n}\\
+\vdots&\ddots&\vdots\\
+a_{m,1}&\dots&a_{m,n}
+\end{pmatrix}\times
+\begin{pmatrix}
+x_1\\
+\vdots\\
+x_n
+\end{pmatrix} = 
+\begin{pmatrix}
+a_{1,1}x_1 +\dots+ a_{1,n}x_n\\
+\vdots\\
+a_{m,1}x_1 +\dots+ a_{m,n}x_n\\
+\end{pmatrix}
+$$
+После этого уже можно обобщить наше произведение на две матрицы. Для этого представим, что 
+мы умножаем систему уравнений не на набор неизвестных, получая матрицу, похожую на систему
+уравнений, а на несколько наборов значений, ведь матрицу можно представить как
+упорядоченный набор векторов.
+\begin{defn}
+    Произведение матриц $A\in M_{m\times n}, B\in M_{n\times k}$ определим следующим образом:
+    $$
+    A\times B = 
+    A\times \big( B_{1,*},\dots,B_{k,*} \big) = 
+    \big(A\times B_{1,*}, \dots, A\times B_{k,*}\big)=
+    \begin{pmatrix}
+        a_{1,1}b_{1,1} +\dots+ a_{1,n}b_{1,n} & \dots & a_{1,1}b_{k,1} +\dots+ a_{1,n}b_{k,n}\\
+        \vdots & \ddots & \vdots\\
+        a_{m,1}b_{1,1} +\dots+ a_{m,n}b_{1,n} & \dots & a_{m,1}b_{k,1} +\dots+ a_{m,n}b_{k,n}\\
+    \end{pmatrix}
+    $$
+    Иначе говоря, если $A\times B = C$, тогда: $$C_{i,j} = \sum_{k=0}^{n}A_{i,k}B_{k,j}$$
+\end{defn}
+\rem
+    (P.s знак $\times$ при умножении матриц и векторов в будущем часто будет опускаться)
+\rem
+    Произведение матриц не коммутативно: $$
+    \begin{pmatrix}
+        1 & 2\\
+        3 & 4
+    \end{pmatrix}
+    \begin{pmatrix}
+        0 & 1\\
+        1 & 0
+    \end{pmatrix}=
+    \begin{pmatrix}
+        2 & 1\\
+        4 & 3
+    \end{pmatrix};\quad
+    \begin{pmatrix}
+        0 & 1\\
+        1 & 0
+    \end{pmatrix}
+    \begin{pmatrix}
+        1 & 2\\
+        3 & 4
+    \end{pmatrix}=
+    \begin{pmatrix}
+        3 & 4\\
+        1 & 2
+    \end{pmatrix} $$
+\begin{examples}
+    Давайте приведём несколько примеров использования введённой нами операции.\\
+    \begin{enumerate}
+        \item Для записи СЛУ в виде $Ax = b$, где $A$~---~матрица, а $x,b$~---~вектора.
+        \item Для записи скалярного произведения: $a^Tx$, где $x, a$~---~ вектора, а
+            $a^T$ операция транспонирования матрицы, о которой будет сказано позже. Пока
+            её можно воспринимать как переворот вектора в матрицу $M_{1\times n}$.
+        \item
+            Для подсчёта количества путей размера $k$ между любыми двумя вершинами 
+            ориентированного графа.
+
+            Пусть $G$~---~ориентированный граф. Тогда его \textbf{матрицей смежности} $A(G)$ определим следующим образом:
+            $$ A(G)_{i,j}
+            \begin{cases}
+                1, \text{если есть ребро $i\rightarrow j$}\\
+                0, \text{иначе}\\
+            \end{cases}
+            $$
+            Тогда легко показать, что $(A(G)_{i,j})^k$~---~количество путей $i\rightarrow j$ длины $k$.
+        \item
+            Для подсчёта суммы путей размера $k$ между любыми двумя вершинами взвешенного
+            ориентированного графа, где длинна пути считается как произведение весов рёбер на нём.
+
+            Пример такой задачи: есть статистика по переселению людей между $n$ городами в следующем виде:
+            известно, что вероятность переезда человека из города $i$ в город $j$ равна весу ребра $i\rightarrow j$.
+            Надо по этим данным научиться узнавать шанс того, что человек из города $i$ через $k$ лет будет жить
+            в городе $j$.
+
+            Для простоты будем считать, что сумма весов исходящих рёбер для каждой вершины равна $1$. Если это
+            не так, то мы можем это исправить, создав ребро $i\rightarrow i$ c нужным нам весом.
+            В данной формулировке наиболее понятно, что шанс переезда человека, живущего в городе $i$, в город $j$
+            через $k$ лет будет равен сумме весов путей $i\rightarrow j$ длины $k$, если вес пути это произведение
+            всех рёбер на нём. Таким образом, мы получили задачу похожую на предыдущую, за исключением того, что
+            наш граф теперь взвешенный, а значит $(A(G)_{i,j})^k$~---~искомая вероятность.
+    \end{enumerate}
+\end{examples}
+\begin{properties}\leavevmode
+    \begin{enumerate}
+        \item
+            Ассоциативность произведения матриц в случае, где оба произведения определены:
+            $(AB)C = A(BC)$. (Доказать самим)
+        \item
+            Существование единичной матрицы $E_n = 
+            \begin{pmatrix}
+                1 & 0 & 0 & \dots & 0\\
+                0 & 1 & 0 & \dots & 0\\
+                \vdots & \vdots & \vdots & \ddots & \vdots\\
+                0 & 0 & \dots & 0 & 1
+            \end{pmatrix}$
+            Доказательство того, что она не изменяет умножаемую на неё, очевидно.
+        \item Обратный элемент существует не для любой матрицы. Приведём пример с 
+            $
+            \begin{pmatrix}
+                0 & 0\\
+                0 & 1
+            \end{pmatrix}$: $$
+            \begin{pmatrix}
+                0 & 0\\
+                0 & 1
+            \end{pmatrix}
+            \begin{pmatrix}
+                a & b\\
+                c & d
+            \end{pmatrix} = 
+            \begin{pmatrix}
+                0 & 0\\
+                c & d
+            \end{pmatrix}\not=
+            \begin{pmatrix}
+                1 & 0\\
+                0 & 1
+            \end{pmatrix} $$
+    \end{enumerate}
+\end{properties}
+\defn Введём очевидную операцию сложения матриц: $(A+B)_{i,j} = A_{i,j} + B_{i,j}$.
+\begin{properties}\leavevmode
+    \def\zero{\textbf{0}}
+    \begin{enumerate}
+        \item
+            $A + B = B + A$
+        \item
+            $(A + B) + C = A + (B+C)$
+        \item
+            $\zero_{m\times n} =
+            \begin{pmatrix}
+                0 & \dots & 0\\
+                0 & \ddots & 0\\
+                0 & \dots & 0
+            \end{pmatrix}$
+        \item
+            $\forall A \in M \exists (-A): A + (-A) = \zero$
+        \item
+            $(A+B)C = AC + BC$\\
+            $C(A+B) = CA + CB$
+    \end{enumerate}
+\end{properties}
+
+\defn Введём операцию умножения вектора на скаляр следующим образом:
+$$ \lambda
+\begin{pmatrix}
+    x_1\\
+    \vdots\\
+    x_n
+\end{pmatrix} =
+\begin{pmatrix}
+    \lambda x_1\\
+    \vdots\\
+    \lambda x_n
+\end{pmatrix} $$
+\begin{properties}\leavevmode
+    \newcommand\xvec{
+        \begin{pmatrix}
+            x_1\\
+            \vdots\\
+            x_n
+        \end{pmatrix}
+    }
+    \begin{enumerate}
+        \item
+            $$
+            \begin{pmatrix}
+                \lambda & 0 & 0 & \dots\\
+                0 & \lambda & 0 & \dots\\
+                \vdots & \vdots & \ddots & \vdots\\
+                0 & \dots & 0 & \lambda
+            \end{pmatrix}
+            \xvec
+            =
+            \begin{pmatrix}
+                \lambda x_1\\
+                \vdots\\
+                \lambda x_n
+            \end{pmatrix} = 
+            \lambda
+            \xvec
+            $$
+        \item
+            $$
+            (\lambda\mu)\xvec = (\mu\lambda)\xvec = \lambda\left(\mu\xvec\right)
+            $$
+    \end{enumerate}
+\end{properties}
+\defn Введём операцию умножения матрицы на скаляр следующим образом:
+$$ \lambda A = 
+\begin{pmatrix}
+    \lambda & 0 & 0 & \dots\\
+    0 & \lambda & 0 & \dots\\
+    \vdots & \vdots & \ddots & \vdots\\
+    0 & \dots & 0 & \lambda
+\end{pmatrix} A $$
+\begin{properties}\leavevmode
+    \begin{enumerate}
+        \item
+            $$
+            \lambda(AB) = (\lambda A)B = A(\lambda B)
+            $$
+    \end{enumerate}
+\end{properties}
+\begin{rem}
+    Исходя из введённых выше операций и их свойств становятся очевидными некоторые утверждения
+    про решения СЛУ, перечислим их:
+    \begin{enumerate}
+        \item
+            $$
+            \begin{cases}
+                Ax = b\\
+                Ay = c
+            \end{cases}\Rightarrow
+            A(x+y) = b+c
+            $$
+            Где $x,y,b,c$~---~вектора, а $A$~---~матрица системы.
+        \item
+            Из предыдущего свойства:
+            $$
+            \begin{cases}
+                Ax=b\\
+                Ax_0=0
+            \end{cases}\Rightarrow
+            A(x+x_0)=b\Rightarrow A(x + kx_0) = b, \forall k\in \N
+            $$
+        \item
+            Пусть $L = \{x\mid Ax=0\}\subset R^n$, тогда знаем следующие факты про 
+            $x_1, x_2\in L, \lambda \in R$:
+            \begin{enumerate}
+                \item $x_1 + x_2 \in L$
+                \item $\lambda x_1 \in L$
+            \end{enumerate}
+    \end{enumerate}
+\end{rem}
+\section{Векторные пространства}
+Заметим, что полученные нами свойства не вписываются в изучаемые ранее структуры, из-за чего возникает желание завести новый объект. 
+\defn Векторным пространством над полем $K$ будем называть набор $(V, +, \cdot)$, удовлетворяющий свойствам ниже.
+\begin{properties}\leavevmode
+    \begin{enumerate}
+        \item 
+            \begin{enumerate}
+                \item Определена операция умножения вектора на скаляр $\cdot: K \times V \mapsto V$
+                \item Определена операция сложения векторов $+: V \times V \mapsto V$
+            \end{enumerate}
+        \item $(V,+)$~---~абелева группа
+        \item $\lambda(v_1 + v_2) = \lambda v_1 + \lambda v_2$
+        \item $(\lambda + \mu)\cdot v = \lambda v_1 + \lambda v_2$
+        \item $1\cdot v = v$
+        \item $(\lambda\mu)v = \lambda(\mu v)$
+    \end{enumerate}
+\end{properties}
+\begin{examples}\leavevmode
+    \begin{enumerate}
+        \item $K^n$~---~векторное пространство над $K$.
+        \item $M_{m\times n}(K)$~---~векторное пространство над $K$.
+        \item
+            \begin{enumerate}
+                \item $\C$~---~векторное пространство над $\R$.
+                \item $\R$~---~векторное пространство над $\Q$.
+                \item Таким образом можно показать, что если $K$ является подполем $L$, то $L$~---~векторное пространство над $K$.
+            \end{enumerate}
+        \item $C[a,b]$~---~векторное пространство над $\R$.
+        \item $C'[a,b]$~---~векторное пространство(далее ВП) над $\R$.
+    \end{enumerate}
+\end{examples}
+\defn Если $W\subseteq V$, то $W$ является \textbf{подпространством} при выполнении следующих условий:
+\begin{enumerate}
+    \item $a+b\in W \quad \forall a, b\in W$.
+    \item $\lambda\cdot v \in W \quad \forall \lambda \in K, v\in W$.
+    \item $\overline{0}\in W$
+\end{enumerate}
+\example
+$\{x\mid Ax = 0\}$ подпространство в $K^n$.
+\defn \textbf{Линейной комбинацией векторов} $v_1,\dots,v_n\in V$ назовём: $\lambda_1v_1 + \lambda_2v_2 + \dots + \lambda_nv_n$, где $\lambda_i\in K$.
+\defn \textbf{Линейно зависимыми} назовём множество векторов такое, что любой вектор из множества
+записывается в виде линейной комбинации остальных. Иначе говоря, $v_1,\dots,v_n$~---~линейно зависимы если:
+$\exists \lambda_1,\dots,\lambda_n\in K: \lambda_1v_1 + \dots + \lambda_nv_n=0, \exists \lambda_j \not= 0$.

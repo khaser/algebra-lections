@@ -1,0 +1,64 @@
+\documentclass[a4paper]{article}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{extarrows}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[legalpaper, margin=1in]{geometry}
+
+
+\DeclareRobustCommand{\divby}{%
+  \mathrel{\vbox{\baselineskip.65ex\lineskiplimit0pt\hbox{.}\hbox{.}\hbox{.}}}%
+}
+\def\ndivby{\not\;\divby}
+\def\mequiv#1{\underset{\mathrm{#1}}{\equiv}}
+\def\bits#1{\underbrace{111\dots 1}_{#1}}
+\def\N{\mathbb{N}}
+\def\Z{\mathbb{Z}}
+\def\Q{\mathbb{Q}}
+\def\R{\mathbb{R}}
+\def\C{\mathbb{C}}
+\delimitershortfall-1sp
+\newcommand\abs[1]{\left|#1\right|}
+
+\newtheorem{uprz}{\color{violet!100!black} Упражнение}
+\newtheorem{predl}{\color{blue!50!black} Предложение}
+\newtheorem{komment}{\color{green!50!blue} Комментарий}
+\newtheorem{conj}{Гипотеза}
+\newtheorem{notation}{\color{yellow!30!red} Обозначение}
+\theoremstyle{definition}
+\newtheorem{kit}{Кит}
+\newtheorem*{rem}{\color{green!50!blue}Замечание}
+\newtheorem*{properties}{\color{green!50!blue}Свойства}
+\newtheorem{zad}{\color{violet!100!black}Задача}
+\newtheorem*{defn}{\color{yellow!30!red} Определение}
+\newtheorem*{fact}{Факт}
+\newtheorem{thm}{\color{red!40!black}Теорема}
+\newtheorem*{thmm}{\color{red!40!black} Теорема}
+\newtheorem{lem}{\color{green!50!black}Лемма}
+\newtheorem{cor}{\color{green!45!black}Следствие}
+\newtheorem{utvr}{\color{blue!50!black}Утверждение}
+\newtheorem{axiom}{\color{blue!50!black}Аксиома}
+\newtheorem{quest}{\color{violet!100!black}Вопрос}
+\newtheorem{example}{\color{green!50!blue}Пример}
+\newtheorem*{examples}{\color{green!50!blue}Примеры}
+
+
+\title{Лекции по алгебре первого курса СП 2021}
+\author{Преподаватель: Константин Михайлович Чепуркин}
+\date{весна 2021}
+
+\begin{document}
+\maketitle
+
+\section*{Лекция 14.02}
+\input{14.02.tex}
+
+\section*{Лекция 21.02}
+\input{21.02.tex}
+
+\end{document}
+
